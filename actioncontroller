@@ -1,40 +1,16 @@
-package com.cg.controller;
-
-import java.io.IOException;
-
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import com.cg.bean.Employee;
-
-
-@WebServlet("/ActionController")
-public class ActionController extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doPost(request,response);
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String id = request.getParameter("empId");
-		int eid=Integer.parseInt(id);
-		String enm =request.getParameter("empName");
-		String sal=request.getParameter("empSal");
-		double esl=Double.parseDouble(sal);
-		Employee employee=new Employee();
-		employee.setEmpId(eid);
-		employee.setEmpName(enm);
-		employee.setEmpSal(esl);
-		getServletContext().setAttribute("employee", employee);
-		response.sendRedirect("output1.jsp");
-				
-	}
-
-}
+ <jsp:useBean id="employee" class="com.cg.bean.Employee" scope="request"></jsp:useBean>
+ <jsp:setProperty property="*" name="employee"/>
+    
+ <table border="1">
+  <tr><th colspan="3">Employee Info</th></tr>
+  <tr>
+	  <th>Employee Id</th>
+	  <th>Employee Name</th>
+	  <th>Salary</th>
+  </tr>
+   <tr>
+	  <td><jsp:getProperty property="empId" name="employee"/></td>
+	  <td><jsp:getProperty property="empName" name="employee"/></td>
+	  <td><jsp:getProperty property="empSal" name="employee"/></td>
+  </tr>
+ </table>
